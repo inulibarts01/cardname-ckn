@@ -1,26 +1,150 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #D9FDFD;
+  --foreground: #004D44;
+  --primary: #00635B;
+  --accent: #FFD646;
+  --card-back: #004D44;
+  --card-front: #FFFFFF;
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.4);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 2rem;
+  box-shadow: 0 10px 40px rgba(0, 77, 68, 0.05);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 99, 91, 0.3);
+}
+
+.btn-accent {
+  background-color: var(--accent);
+  color: var(--foreground);
+  padding: 0.75rem 1.5rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.btn-light {
+  background-color: #C1F9F9;
+  color: var(--foreground);
+  padding: 0.75rem 1.5rem;
+  border-radius: 1rem;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+/* Card Styles */
+.card-container {
+  perspective: 1000px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+
+.card-inner.flipped {
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  border-radius: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+/* Side shown first (Star) */
+.card-front-face {
+  background-color: var(--card-back);
+  color: white;
+  transform: rotateY(0deg);
+  z-index: 2;
+}
+
+/* Secret side (Fruit) */
+.card-back-face {
+  background-color: var(--card-front);
+  transform: rotateY(180deg);
+  border: 3px solid transparent;
+  z-index: 1;
+}
+
+.card-back-face.matched {
+  border-color: var(--accent);
+}
+
+.nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #66A39D;
+  transition: color 0.2s;
+}
+
+.nav-item.active {
+  color: var(--accent);
+}
+
+.nav-item.active .nav-icon {
+  background-color: var(--accent);
+  color: var(--foreground);
+}
+
+.nav-icon {
+  padding: 0.5rem;
+  border-radius: 1rem;
+  transition: all 0.2s;
 }
